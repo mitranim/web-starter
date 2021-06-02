@@ -1,0 +1,32 @@
+<!doctype html>
+
+<link rel="icon" href="data:;base64,=">
+
+<style>
+  html {
+    font-family: system-ui, sans-serif;
+    padding: 4rem;
+    background-color: hsl(0, 0%, 14%);
+    color: white;
+  }
+
+  a[href] {color: aqua;}
+  .center {text-align: center;}
+  .italic {font-style: italic;}
+</style>
+
+<body class="center"></body>
+
+<p>This text was rendered statically.</p>
+
+<script type="module">
+  // You can import arbitrary NPM modules, as long as they
+  // conform to the JS module format. This package provides
+  // shortcuts for rendering DOM/HTML via nested function calls.
+  import {E} from 'https://unpkg.com/prax@0.6.0/dom.mjs'
+
+  document.body.append(
+    E('p', {class: 'italic'}, `This text was rendered in the browser.`),
+    E('p', {}, `You can make useful apps without any additional tooling.`),
+  )
+</script>
