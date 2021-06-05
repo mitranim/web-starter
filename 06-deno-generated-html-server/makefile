@@ -19,7 +19,7 @@ styles:
 	$(SASS)
 
 afr-w:
-	$(DENO) --watch https://unpkg.com/afr@0.3.2/afr_deno.mjs --port 36582 --verbose true
+	deno run --allow-net --allow-read https://unpkg.com/afr@0.3.2/afr_deno.mjs --port 36582 --verbose true
 
 html-srv-w:
 	$(DENO) --watch main.mjs html srv

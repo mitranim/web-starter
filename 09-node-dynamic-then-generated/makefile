@@ -49,3 +49,4 @@ ifeq ($(OS), Windows_NT)
 else
 	brew install sass/sass/sass node watchexec
 endif
+	npm i
