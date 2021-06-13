@@ -1,11 +1,12 @@
 import * as pt from 'path'
 import * as hs from 'http/server'
 import * as a from 'afr'
-import {E, doc, e} from 'prax'
+import {E} from 'prax'
+import * as x from 'prax'
 
 const afrOpts = {port: 36582}
 const srvOpts = {port: 36583, hostname: 'localhost'}
-const dirs = [a.dir('target'), a.dir('.', /^browser[.]mjs$/)]
+const dirs = [a.dir('target'), a.dir('static')]
 
 const routes = [
   {url: '/',       path: 'target/index.html', fun: Index},
@@ -67,11 +68,12 @@ function NotFound() {
 }
 
 function Layout(...children) {
-  return doc(
+  return x.doc(
     E('html', {},
       E('head', {},
         E('link', {rel: 'icon', href: 'data:;base64,='}),
         E('link', {rel: 'stylesheet', href: '/main.css'}),
+        swScript(),
       ),
       E('body', {class: 'center limit'}, children),
       E('script', {type: 'module', src: '/browser.mjs'}),
@@ -83,10 +85,16 @@ function Layout(...children) {
   )
 }
 
-export const p = e('p', {})
-export const ul = e('ul', {})
-export const li = e('li', {})
-export const code = e('code', {})
+function swScript() {
+  return E('script', {}, new x.Raw(`
+    navigator.serviceWorker.register('/sw.mjs')
+  `.trim()))
+}
+
+export const p = x.e('p', {})
+export const ul = x.e('ul', {})
+export const li = x.e('li', {})
+export const code = x.e('code', {})
 
 const htmlHeaders = new Headers({'content-type': 'text/html'})
 

@@ -49,7 +49,7 @@ function NotFound() {
   )
 }
 
-async function Layout(...children) {
+function Layout(...children) {
   return doc(
     E('html', {},
       E('head', {},

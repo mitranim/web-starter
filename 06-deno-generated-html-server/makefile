@@ -1,6 +1,7 @@
 MAKEFLAGS := --silent --always-make
 PAR := $(MAKE) -j 128
 TAR := target
+STATIC := static
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
 DENO := deno run -A --import-map imports.json
 
@@ -30,10 +31,10 @@ html:
 cp:
 ifeq ($(OS), Windows_NT)
 	if not exist $(TAR) mkdir $(TAR)
-	copy browser.mjs $(TAR) >nul
+	copy $(STATIC)\* $(TAR) >nul
 else
 	mkdir -p $(TAR)
-	cp browser.mjs $(TAR)
+	cp $(STATIC)/* $(TAR)
 endif
 
 clean:
