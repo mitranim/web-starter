@@ -5,7 +5,7 @@ import {E, doc, e} from 'prax'
 
 const afrOpts = {port: 36582}
 const srvOpts = {port: 36583, hostname: 'localhost'}
-const dirs = [a.dir('target'), a.dir('.', /^browser.mjs$/)]
+const dirs = [a.dir('target'), a.dir('.', /^browser[.].mjs$/)]
 
 
 const routes = [

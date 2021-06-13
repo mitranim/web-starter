@@ -8,7 +8,7 @@ import {E, doc, e} from 'prax'
 const args = process.argv.slice(2)
 const afrOpts = {port: 36582}
 const srvOpts = {port: 36583}
-const dirs = [a.dir('target'), a.dir('.', /^browser.mjs$/)]
+const dirs = [a.dir('target'), a.dir('.', /^browser[.].mjs$/)]
 
 const routes = [
   {path: 'target/index.html', fun: Index},

@@ -9,7 +9,7 @@ importmaps require an additional polyfill:
 
   https://github.com/guybedford/es-module-shims
 */
-import {E} from 'https://unpkg.com/prax@0.6.0/dom.mjs'
+import {E} from 'https://unpkg.com/prax@0.7.0/dom.mjs'
 
 document.body.append(
   E('p', {class: 'italic'}, `This text was rendered in the browser.`),
