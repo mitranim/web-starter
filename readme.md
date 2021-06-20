@@ -57,25 +57,25 @@ Each example uses only _some_ of these! Run `make deps` in an example directory 
 `sass`: less bad way to write CSS.
 
   * Linux/BSD: see https://sass-lang.com/install.
-  * MacOS: `brew install sass/sass/sass`.
+  * MacOS: `brew install -q sass/sass/sass`.
   * Windows: `scoop install sass` or `choco install sass`.
 
 `deno`: JS interpreter with filesystem and network access. Newer, nicer replacement for Node.js.
 
   * Linux/BSD: see https://deno.land.
-  * MacOS: `brew install deno`.
+  * MacOS: `brew install -q deno`.
   * Windows: `scoop install deno` or `choco install deno`.
 
 `node`: JS interpreter with filesystem and network access.
 
   * Linux/BSD: see https://nodejs.org.
-  * MacOS: `brew install node`.
+  * MacOS: `brew install -q node`.
   * Windows: `scoop install nodejs` or `choco install nodejs`.
 
 `watchexec`: watch files and restart a command.
 
   * Linux/BSD: see https://github.com/watchexec/watchexec.
-  * MacOS: `brew install watchexec`.
+  * MacOS: `brew install -q watchexec`.
   * Windows: `scoop install watchexec` or `choco install watchexec`.
 </details>
 

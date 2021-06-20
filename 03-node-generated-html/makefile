@@ -36,6 +36,6 @@ deps:
 ifeq ($(OS), Windows_NT)
 	scoop install sass nodejs watchexec
 else
-	brew install sass/sass/sass node watchexec
+	brew install -q sass/sass/sass node watchexec
 endif
 	npm i

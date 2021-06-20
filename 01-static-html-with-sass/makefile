@@ -12,5 +12,5 @@ deps:
 ifeq ($(OS), Windows_NT)
 	scoop install sass
 else
-	brew install sass/sass/sass
+	brew install -q sass/sass/sass
 endif
