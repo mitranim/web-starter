@@ -1,5 +1,4 @@
 import * as pt from 'path'
-import * as hs from 'http/server'
 import * as a from 'afr'
 import {E} from 'prax'
 import * as x from 'prax'
@@ -27,21 +26,45 @@ async function html() {
 }
 
 async function srv() {
-  const srv = hs.serve(srvOpts)
-  console.log(`[srv] listening on http://${srvOpts.hostname}:${srvOpts.port}`)
+  const lis = Deno.listen(srvOpts)
+  console.log(`[srv] listening on http://${srvOpts.hostname || 'localhost'}:${srvOpts.port}`)
   watch()
-  for await (const req of srv) respond(req)
-}
-
-async function respond(req) {
-  if (await a.serveSiteWithNotFound(req, dirs)) return
-  await req.respond({status: 404, body: 'not found'})
+  for await (const conn of lis) serveHttp(conn)
 }
 
 async function watch() {
   a.maybeSend(a.change, afrOpts)
   for await (const msg of a.watch('.', dirs, {recursive: true})) {
-    await a.send(msg, afrOpts)
+    await a.maybeSend(msg, afrOpts)
+  }
+}
+
+async function serveHttp(conn) {
+  for await (const event of Deno.serveHttp(conn)) {
+    respond(event)
+  }
+}
+
+async function respond(event) {
+  const {request: req} = event
+  try {
+    await event.respondWith(response(req))
+  }
+  catch (err) {
+    console.error(`[srv] unexpected error while serving ${req.url}:`, err)
+  }
+}
+
+async function response(req) {
+  try {
+    return (
+      (await a.resSiteWithNotFound(req, dirs)) ||
+      new Response('not found', {status: 404})
+    )
+  }
+  catch (err) {
+    // console.error(`[srv] unexpected error while serving ${req.url}:`, err)
+    return new Response(err?.stack || err?.message || err, {status: 500})
   }
 }
 

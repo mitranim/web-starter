@@ -3,7 +3,7 @@ PAR := $(MAKE) -j 128
 TAR := target
 STATIC := static
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
-NODEW := watchexec -r -d=0 -n -e=mjs -i $(STATIC) -- node
+DENO := deno run -A --unstable --no-check --import-map imports.json
 
 watch: clean
 	$(PAR) styles-w afr-w html-srv-w
@@ -20,13 +20,13 @@ styles:
 	$(SASS)
 
 afr-w:
-	node node_modules/afr/afr_node_cli.mjs --port 36582 --verbose true
+	deno run --allow-net --allow-read --unstable https://deno.land/x/afr@0.4.0/afr.mjs --port 36582 --verbose true
 
 html-srv-w:
-	$(NODEW) main.mjs html srv
+	$(DENO) --watch main.mjs html srv
 
 html:
-	node main.mjs html
+	$(DENO) main.mjs html
 
 cp:
 ifeq ($(OS), Windows_NT)
@@ -46,8 +46,7 @@ endif
 
 deps:
 ifeq ($(OS), Windows_NT)
-	scoop install sass nodejs watchexec
+	scoop install sass deno
 else
-	brew install -q sass/sass/sass node watchexec
+	brew install -q sass/sass/sass deno
 endif
-	npm i

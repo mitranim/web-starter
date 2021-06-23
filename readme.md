@@ -6,7 +6,7 @@ Important qualities:
 
 * Minimal. No layers of crap. No hundreds-of-megabytes of JS dependencies.
 * Fast. Nothing slowing you down.
-* Modern. Avoid obsolete patterns and frameworks.
+* Modern. Avoid obsolete patterns and tech.
 * Nice developer experience. No weird bullshit in your way. Watch-and-restart where possible.
 * Sucks less than X (insert random guide/starter you found).
 
@@ -52,7 +52,7 @@ If you don't already have [`git`](https://git-scm.com) installed, get it. (Comes
 <details>
 <summary>Most examples require something extra. Click for details.</summary>
 
-Each example uses only _some_ of these! Run `make deps` in an example directory to install just what it needs.
+Run `make deps` in an example directory to install just what it needs.
 
 `sass`: less bad way to write CSS.
 
@@ -65,18 +65,6 @@ Each example uses only _some_ of these! Run `make deps` in an example directory 
   * Linux/BSD: see https://deno.land.
   * MacOS: `brew install -q deno`.
   * Windows: `scoop install deno` or `choco install deno`.
-
-`node`: JS interpreter with filesystem and network access.
-
-  * Linux/BSD: see https://nodejs.org.
-  * MacOS: `brew install -q node`.
-  * Windows: `scoop install nodejs` or `choco install nodejs`.
-
-`watchexec`: watch files and restart a command.
-
-  * Linux/BSD: see https://github.com/watchexec/watchexec.
-  * MacOS: `brew install -q watchexec`.
-  * Windows: `scoop install watchexec` or `choco install watchexec`.
 </details>
 
 ## Usage
@@ -112,7 +100,7 @@ Avoid thick stacks of crap. Use tiny, dependency-free tools.
 
 Each suggestion below is just that: a tiny dependency-free tool, that does one job extremely well and replaces mountainous amounts of junk offered by alternatives.
 
-* HTTP requests: use the native [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). When using Node, use a fetch [polyfill/shim](https://github.com/node-fetch/node-fetch). Deno has `fetch` built-in. Use [abort signals](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) for cancelation. You don't need anything else. Libraries with thousands of stars will just waste your time.
+* HTTP requests: use the native [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). Use [abort signals](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) for cancelation. You don't need anything else. Libraries with thousands of stars will just waste your time.
 
 * Type assertions and functional programming utils: [`fpx`](https://github.com/mitranim/fpx). Tiny replacement for Lodash.
 
@@ -125,8 +113,6 @@ Each suggestion below is just that: a tiny dependency-free tool, that does one j
 * [`es-module-shims`](https://github.com/guybedford/es-module-shims) allows to use import maps in all modern browsers.
 
 * [Custom elements polyfill](https://github.com/webcomponents/polyfills). Required in some modern browsers for the "customized built-in elements" feature. Pick the basic v1 polyfill unless you _know_ you need the other features.
-
-* [`node-fetch`](https://github.com/node-fetch/node-fetch) allows `fetch` in Node.
 
 ## CSS Recommendations
 
@@ -158,7 +144,7 @@ Don't make SQL queries by bashing strings together. Use SQL parameters. Look for
 
 ## Server Recommendations
 
-For JS build tools, servers, and general scripting, learn [Deno](https://deno.land) and maybe [Node](https://nodejs.org). Using them for a minimal server can be time-efficient for small projects. Avoid them for complicated servers, or you'll drown in maintenance. (Deno with TypeScript might be acceptable, but performance may suck compared to Go.)
+For JS build tools, servers, and general scripting, learn [Deno](https://deno.land). Using it for a minimal server can be time-efficient for small projects. Avoid for complicated servers, or you'll drown in maintenance. (TypeScript might be acceptable, but performance may suck compared to Go.)
 
 Learn and use [Go](https://golang.org). It's time-inefficient for new projects, but very solid in the long run. It'll offset the brain damage you'll suffer from other languages.
 

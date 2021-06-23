@@ -1,7 +1,7 @@
 MAKEFLAGS := --silent --always-make
 PAR := $(MAKE) -j 128
 SASS := sass --no-source-map main.scss:main.css
-NODEW := watchexec -r -d=0 -n -e=mjs -i $(STATIC) -- node
+DENO := deno run -A --unstable --no-check
 
 watch:
 	$(PAR) styles-w srv-w
@@ -15,15 +15,11 @@ styles:
 	$(SASS)
 
 srv-w:
-	$(NODEW) srv.mjs
-
-srv:
-	node srv.mjs
+	$(DENO) --watch srv.mjs
 
 deps:
 ifeq ($(OS), Windows_NT)
-	scoop install sass nodejs watchexec
+	scoop install sass deno
 else
-	brew install -q sass/sass/sass node watchexec
+	brew install -q sass/sass/sass deno
 endif
-	npm i

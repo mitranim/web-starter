@@ -1,5 +1,4 @@
 import * as pt from 'path'
-import * as hs from 'http/server'
 import * as a from 'afr'
 import {E} from 'prax'
 import * as x from 'prax'
@@ -9,11 +8,11 @@ const srvOpts = {port: 36583, hostname: 'localhost'}
 const dirs = [a.dir('target'), a.dir('static')]
 
 const routes = [
-  {url: '/',       path: 'target/index.html', fun: Index},
-  {url: undefined, path: 'target/404.html',   fun: NotFound},
+  {pathname: '/',       path: 'target/index.html', fun: Index},
+  {pathname: undefined, path: 'target/404.html',   fun: NotFound},
 ]
 
-const notFound = routes.find(route => !route.url)
+const notFound = routes.find(route => !route.pathname)
 
 async function main() {
   if (Deno.args.includes('html')) await html()
@@ -29,34 +28,62 @@ async function html() {
 }
 
 async function srv() {
-  const srv = hs.serve(srvOpts)
-  console.log(`[srv] listening on http://${srvOpts.hostname}:${srvOpts.port}`)
+  const lis = Deno.listen(srvOpts)
+  console.log(`[srv] listening on http://${srvOpts.hostname || 'localhost'}:${srvOpts.port}`)
   watch()
-  for await (const req of srv) respond(req)
+  for await (const conn of lis) serveHttp(conn)
 }
 
-async function respond(req) {
-  if (await a.serveSiteWithNotFound(req, dirs)) return
-
-  const route = routes.find(route => route.url === req.url)
-  if (route) {
-    await req.respond({body: await route.fun(), headers: htmlHeaders})
-    return
+async function serveHttp(conn) {
+  for await (const event of Deno.serveHttp(conn)) {
+    respond(event)
   }
+}
 
-  await req.respond({status: 404, body: await notFound.fun(), headers: htmlHeaders})
+async function respond(event) {
+  const {request: req} = event
+  try {
+    await event.respondWith(response(req))
+  }
+  catch (err) {
+    console.error(`[srv] unexpected error while serving ${req.url}:`, err)
+  }
+}
+
+async function response(req) {
+  try {
+    return (
+      (await a.resSiteWithNotFound(req, dirs)) ||
+      (await routeResponse(req)) ||
+      new Response('not found', {status: 404})
+    )
+  }
+  catch (err) {
+    // console.error(`[srv] unexpected error while serving ${req.url}:`, err)
+    return new Response(err?.stack || err?.message || err, {status: 500})
+  }
+}
+
+async function routeResponse(req) {
+  const {pathname} = new URL(req.url)
+  
+  const route = routes.find(route => route.pathname === pathname)
+  if (route) {
+    return new Response(await route.fun(), {headers: htmlHeaders})
+  }
+  return new Response(await notFound.fun(), {headers: htmlHeaders, status: 404})
 }
 
 async function watch() {
   a.maybeSend(a.change, afrOpts)
   for await (const msg of a.watch('.', dirs, {recursive: true})) {
-    await a.send(msg, afrOpts)
+    await a.maybeSend(msg, afrOpts)
   }
 }
 
 function Index() {
   return Layout(
-    p(`This text was rendered at build time.`),
+    p(`This text was rendered at build or response time.`),
   )
 }
 
@@ -96,6 +123,6 @@ export const ul = x.e('ul', {})
 export const li = x.e('li', {})
 export const code = x.e('code', {})
 
-const htmlHeaders = new Headers({'content-type': 'text/html'})
+const htmlHeaders = {'content-type': 'text/html'}
 
 await main()

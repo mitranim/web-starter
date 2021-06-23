@@ -2,7 +2,7 @@ MAKEFLAGS := --silent --always-make
 PAR := $(MAKE) -j 128
 TAR := target
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
-DENO := deno run -A
+DENO := deno run -A --unstable --no-check
 
 watch:
 	$(PAR) styles-w html-w

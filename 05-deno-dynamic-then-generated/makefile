@@ -3,10 +3,10 @@ PAR := $(MAKE) -j 128
 TAR := target
 STATIC := static
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
-DENO := deno run -A --import-map imports.json
+DENO := deno run -A --unstable --no-check --import-map imports.json
 
 watch: clean
-	$(PAR) styles-w afr-w html-srv-w
+	$(PAR) styles-w afr-w srv-w
 
 build: clean all
 
@@ -20,10 +20,10 @@ styles:
 	$(SASS)
 
 afr-w:
-	deno run --allow-net --allow-read https://unpkg.com/afr@0.3.2/afr_deno.mjs --port 36582 --verbose true
+	deno run --allow-net --allow-read --unstable https://deno.land/x/afr@0.4.0/afr.mjs --port 36582 --verbose true
 
-html-srv-w:
-	$(DENO) --watch main.mjs html srv
+srv-w:
+	$(DENO) --watch main.mjs srv
 
 html:
 	$(DENO) main.mjs html

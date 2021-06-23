@@ -1,5 +1,5 @@
 import * as pt from 'https://deno.land/std@0.97.0/path/mod.ts'
-import {E, doc, e} from 'https://unpkg.com/prax@0.7.0/str.mjs'
+import {E, doc, e} from 'https://cdn.jsdelivr.net/npm/prax@0.7.1/str.mjs'
 
 async function main() {
   for (const {path, fun} of routes) {
