@@ -30,18 +30,18 @@ html:
 
 cp:
 ifeq ($(OS), Windows_NT)
-	if not exist $(TAR) mkdir $(TAR)
-	copy $(STATIC)\* $(TAR) >nul
+	if not exist "$(TAR)" mkdir "$(TAR)"
+	copy "$(STATIC)"\* "$(TAR)" >nul
 else
 	mkdir -p $(TAR)
-	cp $(STATIC)/* $(TAR)
+	cp "$(STATIC)"/* "$(TAR)"
 endif
 
 clean:
 ifeq ($(OS), Windows_NT)
-	if exist $(TAR) rmdir /s /q $(TAR)
+	if exist "$(TAR)" rmdir /s /q "$(TAR)"
 else
-	rm -rf $(TAR)
+	rm -rf "$(TAR)"
 endif
 
 deps:

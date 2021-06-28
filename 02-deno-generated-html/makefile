@@ -27,9 +27,9 @@ html:
 
 clean:
 ifeq ($(OS), Windows_NT)
-	if exist $(TAR) rmdir /s /q $(TAR)
+	if exist "$(TAR)" rmdir /s /q "$(TAR)"
 else
-	rm -rf $(TAR)
+	rm -rf "$(TAR)"
 endif
 
 deps:
