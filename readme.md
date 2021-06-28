@@ -112,7 +112,7 @@ Each suggestion below is just that: a tiny dependency-free tool, that does one j
 
 * [`es-module-shims`](https://github.com/guybedford/es-module-shims) allows to use import maps in all modern browsers.
 
-* [Custom elements polyfill](https://github.com/webcomponents/polyfills). Required in some modern browsers for the "customized built-in elements" feature. Pick the basic v1 polyfill unless you _know_ you need the other features.
+* [Custom elements polyfill](https://github.com/ungap/custom-elements). Required in some modern browsers for the "customized built-in elements" feature.
 
 ## CSS Recommendations
 
