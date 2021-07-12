@@ -66,7 +66,7 @@ async function response(req) {
 
 async function routeResponse(req) {
   const {pathname} = new URL(req.url)
-  
+
   const route = routes.find(route => route.pathname === pathname)
   if (route) {
     return new Response(await route.fun(), {headers: htmlHeaders})
