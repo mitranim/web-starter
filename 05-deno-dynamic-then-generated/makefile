@@ -20,7 +20,7 @@ styles:
 	$(SASS)
 
 afr-w:
-	deno run --allow-net --allow-read --unstable https://deno.land/x/afr@0.4.2/afr.mjs --port 36582 --verbose true
+	deno run --allow-net --allow-read --unstable https://deno.land/x/afr@0.5.0/afr.ts --port 36582 --verbose true
 
 srv-w:
 	$(DENO) --watch main.mjs srv

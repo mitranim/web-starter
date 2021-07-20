@@ -1,4 +1,4 @@
-import * as a from 'https://deno.land/x/afr@0.4.2/afr.mjs'
+import * as a from 'https://deno.land/x/afr@0.5.0/afr.ts'
 
 const srvOpts = {port: 36583, hostname: 'localhost'}
 const dirs = [a.dir('.', /[.](?:html|css|mjs)$/)]
