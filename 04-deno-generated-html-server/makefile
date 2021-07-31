@@ -33,7 +33,7 @@ ifeq ($(OS), Windows_NT)
 	if not exist "$(TAR)" mkdir "$(TAR)"
 	copy "$(STATIC)"\* "$(TAR)" >nul
 else
-	mkdir -p $(TAR)
+	mkdir -p "$(TAR)"
 	cp "$(STATIC)"/* "$(TAR)"
 endif
 

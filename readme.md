@@ -108,6 +108,8 @@ Each suggestion below is just that: a tiny dependency-free tool, that does one j
 
 * Observables and reactivity: [`espo`](https://github.com/mitranim/espo). Tiny replacement for MobX/Redux/etc. Does _not_ involve "immutable data", annotations, or TypeScript features.
 
+* Routing: [`imperouter`](https://github.com/mitranim/imperouter). Tiny imperative router, uses only native `Request` and `URL`, works in both SSR and SPA.
+
 ### Polyfills
 
 * [`es-module-shims`](https://github.com/guybedford/es-module-shims) allows to use import maps in all modern browsers.
@@ -131,6 +133,7 @@ Each suggestion below is just that: a tiny dependency-free tool, that does one j
 * Avoid specifying margins in a complicated CSS class. Margins should be set "externally" by the parent/context. Each class should control its own internal layout, including padding, but not how it aligns to its siblings. Having a class that sets _only_ margins is OK.
 * When using Sass, write small, reusable classes and combine them via `@extend`.
 * Avoid serif fonts, especially small.
+* Consider using or reading [`style-base`](https://github.com/mitranim/style-base) for inspiration on foundations of your CSS.
 
 ## Database Recommendations
 
