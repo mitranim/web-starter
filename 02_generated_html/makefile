@@ -2,24 +2,24 @@ MAKEFLAGS := --silent --always-make
 PAR := $(MAKE) -j 128
 TAR := target
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
-DENO := deno run -A --unstable --no-check
+DENO := deno run -A --no-check
 
 watch:
-	$(PAR) styles-w html-w
+	$(PAR) styles_w html_w
 
 build: clean all
 
 all:
 	$(PAR) styles html
 
-styles-w:
+styles_w:
 	$(SASS) --watch
 
 styles:
 	$(SASS)
 
-html-w:
-	echo Open ./$(TAR)/index.html in your browser.
+html_w:
+	echo open ./$(TAR)/index.html in your browser
 	$(DENO) --watch html.mjs
 
 html:

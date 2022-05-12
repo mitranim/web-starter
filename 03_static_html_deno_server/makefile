@@ -4,17 +4,17 @@ SASS := sass --no-source-map main.scss:main.css
 DENO := deno run -A --unstable --no-check
 
 watch:
-	$(PAR) styles-w srv-w
+	$(PAR) styles_w srv_w
 
 build: styles
 
-styles-w:
+styles_w:
 	$(SASS) --watch
 
 styles:
 	$(SASS)
 
-srv-w:
+srv_w:
 	$(DENO) --watch srv.mjs
 
 deps:

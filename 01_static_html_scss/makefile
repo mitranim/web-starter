@@ -2,7 +2,7 @@ MAKEFLAGS := --silent --always-make
 SASS := sass --no-source-map main.scss:main.css
 
 watch:
-	echo Open ./index.html in your browser.
+	echo open ./index.html in your browser
 	$(SASS) --watch
 
 build:

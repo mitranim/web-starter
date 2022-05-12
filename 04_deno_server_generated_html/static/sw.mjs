@@ -1,3 +1,9 @@
+/*
+Caches semantically-versioned assets from a CDN. Useful for offline development,
+because SW bypasses "disable cache". In production this is unnecessary but
+harmless. In development this is also unnecessary if cache is enabled.
+*/
+
 self.onfetch = onFetch
 
 function onFetch(event) {
@@ -8,7 +14,7 @@ function onFetch(event) {
 }
 
 async function fetchWithCache(req) {
-  const cache = await caches.open('main')
+  const cache = await caches.open(`main`)
 
   let res = await cache.match(req)
   if (!res) {
@@ -20,10 +26,6 @@ async function fetchWithCache(req) {
 }
 
 function shouldCache(url) {
-  // Semantically-versioned assets from a CDN are assumed to be immutable and ok
-  // to cache. This is useful for offline development, because SW
-  // bypasses "disable cache". In production it's unnecessary but harmless.
-  //
-  // Other external requests should just use HTTP cache headers.
+  // Semantically-versioned URL.
   return /[@/]v?\d+[.]\d+[.]\d+/.test(url)
 }

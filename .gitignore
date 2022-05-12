@@ -1,5 +1,6 @@
 /*
 !/*ignore
+!/*rc
 !/*.md
 
 !/[0-9]*
@@ -9,6 +10,4 @@
 !/[0-9]*/*.mjs
 !/[0-9]*/*.scss
 !/[0-9]*/*.html
-!/[0-9]*/imports.json
-!/[0-9]*/package.json
 !/[0-9]*/makefile

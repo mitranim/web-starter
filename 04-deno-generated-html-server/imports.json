@@ -1,7 +1,0 @@
-{
-  "imports": {
-    "path": "https://deno.land/std@0.97.0/path/mod.ts",
-    "prax": "https://cdn.jsdelivr.net/npm/prax@0.7.4/str.mjs",
-    "afr": "https://deno.land/x/afr@0.5.0/afr.ts"
-  }
-}

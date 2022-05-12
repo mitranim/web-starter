@@ -3,30 +3,30 @@ PAR := $(MAKE) -j 128
 TAR := target
 STATIC := static
 SASS := sass --no-source-map main.scss:$(TAR)/main.css
-DENO := deno run -A --unstable --no-check --import-map imports.json
+DENO := deno run -A --no-check
 
 watch: clean
-	$(PAR) styles-w afr-w html-srv-w
+	$(PAR) styles_w srv_w live
 
 build: clean all
 
 all:
 	$(PAR) styles html cp
 
-styles-w:
+styles_w:
 	$(SASS) --watch
 
 styles:
 	$(SASS)
 
-afr-w:
-	deno run --allow-net --allow-read --unstable https://deno.land/x/afr@0.5.0/afr.ts --port 36582 --verbose true
+live:
+	$(DENO) live.mjs
 
-html-srv-w:
-	$(DENO) --watch main.mjs html srv
+srv_w:
+	$(DENO) --watch srv.mjs --dev
 
 html:
-	$(DENO) main.mjs html
+	$(DENO) html.mjs
 
 cp:
 ifeq ($(OS), Windows_NT)

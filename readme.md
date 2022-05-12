@@ -90,31 +90,23 @@ Use the new [native JS modules](https://developer.mozilla.org/en-US/docs/Web/Jav
 
 For anything asynchronous, use [`async/await`](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await), with [abort signals](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) for cancelation. Learn the [Promise API](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises) which is the foundation of `async/await`. When dealing with callback-based APIs, convert them to promises.
 
-Avoid build tools such as Webpack, Gulp, Rollup, Parcel, Babel, TypeScript, and others. Avoid huge "starter" packages such as `create-react-app`. Avoid huge frameworks such as Next.js. They will only waste your time. Use native modules. Run directly from source code. Use Make to orchestrate build tasks, as shown here.
+Avoid build tools such as Webpack, Gulp, Rollup, Parcel, Babel, TypeScript, and others. (Esbuild is useful for production builds, but not when learning.) Avoid huge "starter" packages such as `create-react-app`. Avoid huge frameworks such as Next.js. They will only waste your time. Use native modules. Run directly from source code. Use Make to orchestrate build tasks, as shown here.
 
 For general JS scripting, learn and use [Deno](https://deno.land).
 
 ### JS Library Recommendations
 
-Avoid thick stacks of crap. Use tiny, dependency-free tools.
+Prefer tiny, focused, dependency-free tools.
 
-Each suggestion below is just that: a tiny dependency-free tool, that does one job extremely well and replaces mountainous amounts of junk offered by alternatives.
+For HTTP requests, use the native [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). Use [abort signals](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) for cancelation.
 
-* HTTP requests: use the native [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch). Use [abort signals](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) for cancelation. You don't need anything else. Libraries with thousands of stars will just waste your time.
-
-* Type assertions and functional programming utils: [`fpx`](https://github.com/mitranim/fpx). Tiny replacement for Lodash.
-
-* HTML/DOM rendering: [`prax`](https://github.com/mitranim/prax). Tiny replacement for React/Vue/Angular/Elm/Aurelia/Svelte/etc. Does _not_ involve JSX, templates, classes, state, or reactivity. Use [custom DOM elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) for anything stateful.
-
-* Observables and reactivity: [`espo`](https://github.com/mitranim/espo). Tiny replacement for MobX/Redux/etc. Does _not_ involve "immutable data", annotations, or TypeScript features.
-
-* Routing: [`imperouter`](https://github.com/mitranim/imperouter). Tiny imperative router, uses only native `Request` and `URL`, works in both SSR and SPA.
+Consider using https://github.com/mitranim/js as your main library suite. It's used by the examples in this repository.
 
 ### Polyfills
 
-* [`es-module-shims`](https://github.com/guybedford/es-module-shims) allows to use import maps in all modern browsers.
-
 * [Custom elements polyfill](https://github.com/ungap/custom-elements). Required in some modern browsers for the "customized built-in elements" feature.
+
+* [`es-module-shims`](https://github.com/guybedford/es-module-shims) allows to use import maps in all modern browsers.
 
 ## CSS Recommendations
 
@@ -129,11 +121,11 @@ Each suggestion below is just that: a tiny dependency-free tool, that does one j
   * Fixed `max-width` or `max-height` (specifically _max_) is OK.
 * Leave default `font-size` as-is. Let the user agent decide. To increase or decrease font size, use proportions of `rem` such as `1.2rem`.
 * Be suspicious of `position: absolute`, `position: relative`, `overflow: hidden`, `!important`. They tend to be abused. The list is not exhaustive.
-* Avoid negative margins. There is always a better way.
+* Avoid negative margins. There is usually a better way.
 * Avoid specifying margins in a complicated CSS class. Margins should be set "externally" by the parent/context. Each class should control its own internal layout, including padding, but not how it aligns to its siblings. Having a class that sets _only_ margins is OK.
 * When using Sass, write small, reusable classes and combine them via `@extend`.
-* Avoid serif fonts, especially small.
-* Consider using or reading [`style-base`](https://github.com/mitranim/style-base) for inspiration on foundations of your CSS.
+* Avoid serif fonts. Avoid small font sizes.
+* Consider using or reading [`sb`](https://github.com/mitranim/sb) for inspiration on foundations of your CSS.
 
 ## Database Recommendations
 
@@ -149,9 +141,13 @@ Don't make SQL queries by bashing strings together. Use SQL parameters. Look for
 
 For JS build tools, servers, and general scripting, learn [Deno](https://deno.land). Using it for a minimal server can be time-efficient for small projects. Avoid for complicated servers, or you'll drown in maintenance. (TypeScript might be acceptable, but performance may suck compared to Go.)
 
-Learn and use [Go](https://golang.org). It's time-inefficient for new projects, but very solid in the long run. It'll offset the brain damage you'll suffer from other languages.
+Learn and use [Go](https://golang.org). It's time-inefficient for new projects, but very solid in the long run. It also heals brain damage inflicted by other languages.
 
-For brain health, try learning [Rust](https://www.rust-lang.org). If unsuccessful, try in a year.
+* Use panics as exceptions. Avoid manual error handling.
+* Use generics.
+* Consider using https://github.com/mitranim/gg as your main library suite.
+
+For brain health, try learning [Rust](https://www.rust-lang.org). If unsuccessful, retry in a year.
 
 PHP runs some of the world's most successful sites, but inflicts horrible brain damage. Success is not guaranteed. Probably avoid.
 
@@ -161,23 +157,21 @@ Avoid immature "all-in-one" frameworks trying to emulate Ruby on Rails. They wil
 
 ## Deployment Recommendations
 
-For stateless websites, like a personal blog, make a _static site_ and host it on GitHub Pages, Netlify, or something similar; often for free. A static site consists of pre-generated files, can be served efficiently over a CDN, and doesn't require maintenance. Examples in this repo from `04` to `09` are for static sites.
+For stateless websites, like a personal blog, make a _static site_ and host it on GitHub Pages, Netlify, or something similar; often for free. A static site consists of pre-generated files, can be served efficiently over a CDN, and doesn't require maintenance. Many examples in this repo are for static sites.
 
-If your app is simple enough, consider using "cloud functions/lambdas", supported by services such as Netlify. A lot less hassle than a full server.
+If your app is simple enough, consider using "cloud functions/lambdas", supported by services such as Netlify. Less hassle than a full server.
 
 Learn how to containerize (via [Docker](https://docs.docker.com/get-started/overview/) or similar). Automate your deployment, use config files and scripts, turn it into a single command. Every tear you shed now is worth 1024 tears that would be shed later.
 
 Things to avoid:
 
   * Anything called a "hosting".
-
   * Manually setting up a remote system, by running individual commands.
 
 ## TODO
 
 Known missing examples / features:
 
-  * Server error handling: respond with 500 on exceptions.
   * Example: SSR+SPA hybrid.
   * Example: API backend.
   * Example: Postgres and Go.
