@@ -1,5 +1,5 @@
-import * as a from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/all.mjs'
-import * as hd from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/http_deno.mjs'
+import * as a from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/all.mjs'
+import * as hd from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/http_deno.mjs'
 import * as l from './live.mjs'
 import * as s from './site.mjs'
 

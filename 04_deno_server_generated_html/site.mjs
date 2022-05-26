@@ -1,10 +1,10 @@
 /* global Deno */
 
-import * as a from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/all.mjs'
-import * as hd from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/http_deno.mjs'
-import * as ld from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/live_deno.mjs'
-import {paths as p} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/io_deno.mjs'
-import {E, ren} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/ren_str.mjs'
+import * as a from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/all.mjs'
+import * as hd from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/http_deno.mjs'
+import * as ld from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/live_deno.mjs'
+import {paths as p} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/io_deno.mjs'
+import {E, ren} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/ren_str.mjs'
 import * as l from './live.mjs'
 
 const DEV = Deno.args.includes(`--dev`)
@@ -14,7 +14,12 @@ export const dirs = ld.LiveDirs.of(
   hd.dirRel(`static`),
 )
 
-class Page extends a.Dict {
+class Page extends a.Emp {
+  constructor(site) {
+    super()
+    this.site = a.reqInst(site, Site)
+  }
+
   urlPath() {return ``}
 
   fsPath() {
@@ -48,6 +53,8 @@ class Page extends a.Dict {
 }
 
 class Page404 extends Page {
+  // Only for `Nav`.
+  urlPath() {return `404`}
   fsPath() {return `404.html`}
   title() {return `Page Not Found`}
   res() {return a.resBui().html(this.body()).code(404).res()}
@@ -56,6 +63,7 @@ class Page404 extends Page {
     return Layout(
       E(`h1`, {}, this.title()),
       E(`a`, {href: `/`}, `Return home`),
+      Nav(this),
     )
   }
 }
@@ -69,6 +77,7 @@ class PageIndex extends Page {
     return Layout(
       E(`h1`, {}, this.title()),
       E(`p`, {}, `This text was pre-rendered in HTML.`),
+      Nav(this),
     )
   }
 }
@@ -81,6 +90,7 @@ class PageAbout extends Page {
     return Layout(
       E(`h1`, {}, this.title()),
       E(`p`, {}, `This text was pre-rendered in HTML.`),
+      Nav(this),
     )
   }
 }
@@ -88,12 +98,11 @@ class PageAbout extends Page {
 class Site extends a.Emp {
   constructor() {
     super()
-    this.notFound = new Page404()
-    this.index = new PageIndex()
-    this.other = [new PageAbout()]
+    this.notFound = new Page404(this)
+    this.other = [new PageIndex(this), new PageAbout(this)]
   }
 
-  all() {return [this.index, this.notFound, ...this.other]}
+  all() {return [this.notFound, ...this.other]}
 }
 
 export const site = new Site()
@@ -111,4 +120,16 @@ function Layout(...chi) {
       a.vac(DEV) && E(`script`, {type: `module`, src: l.LIVE_CLIENT}),
     )
   )
+}
+
+function Nav(page) {
+  return E(`p`, {class: `gap-hor`},
+    E(`span`, {}, `All links:`),
+    a.map(page.site.all(), PageLink),
+  )
+}
+
+function PageLink(page) {
+  a.reqInst(page, Page)
+  return E(`a`, {href: page.urlPath()}, page.title())
 }

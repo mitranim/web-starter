@@ -1,7 +1,7 @@
 /* global Deno */
 
-import {E, ren} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/ren_str.mjs'
-import {paths as p} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.19/io_deno.mjs'
+import {E, ren} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/ren_str.mjs'
+import {paths as p} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/io_deno.mjs'
 
 async function main() {
   await Promise.all([
@@ -51,14 +51,14 @@ function NotFound() {
   )
 }
 
-function Layout(...children) {
+function Layout(...chi) {
   return ren.doc(
     E(`html`, {},
       E(`head`, {},
         E(`link`, {rel: `icon`, href: `data:;base64,=`}),
         E(`link`, {rel: `stylesheet`, href: `main.css`}),
       ),
-      E(`body`, {class: `center limit`}, children),
+      E(`body`, {class: `center limit`}, chi),
     )
   )
 }
