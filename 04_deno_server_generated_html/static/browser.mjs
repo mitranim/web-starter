@@ -1,6 +1,8 @@
 // You can import any library that uses the JS module format.
-import {E} from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.23/ren_dom.mjs'
+import * as p from 'https://cdn.jsdelivr.net/npm/@mitranim/js@0.1.25/prax.mjs'
+
+const {E} = p.Ren.native()
 
 document.body.append(
-  E(`p`, {class: `italic`}, `This text was rendered in the browser.`),
+  E.p.props({class: `italic`}).chi(`This text was rendered in the browser.`),
 )
